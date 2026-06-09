@@ -232,32 +232,29 @@ export default function HeroSection() {
             <span className="cursor-blink" style={{ color: 'var(--color-primary)' }}>_</span>
           </div>
         </div>
-      </div>
 
-      {/* Scroll hint */}
-      <a
-        href="#about"
-        aria-label="Scroll to about section"
-        style={{
-          position: 'absolute',
-          bottom: 'var(--space-xl)',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 2,
-          color: 'var(--color-text-muted)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '4px',
-          textDecoration: 'none',
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.7rem',
-          animation: 'float 3s ease-in-out infinite',
-        }}
-      >
-        <span>scroll</span>
-        <ChevronDown size={16} color="var(--color-primary)" />
-      </a>
+        {/* Scroll hint */}
+        <a
+          href="#about"
+          aria-label="Scroll to about section"
+          style={{
+            display: 'inline-flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '4px',
+            textDecoration: 'none',
+            color: 'var(--color-text-muted)',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.7rem',
+            animation: 'float 3s ease-in-out infinite',
+            marginTop: 'var(--space-3xl)',
+            cursor: 'pointer',
+          }}
+        >
+          <span>scroll</span>
+          <ChevronDown size={16} color="var(--color-primary)" />
+        </a>
+      </div>
     </section>
   );
 }
