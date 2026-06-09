@@ -23,8 +23,9 @@ export default function MatrixRain() {
     if (!ctx) return;
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const parent = canvas.parentElement;
+      canvas.width = parent ? parent.clientWidth : window.innerWidth;
+      canvas.height = parent ? parent.clientHeight : window.innerHeight;
     };
     resize();
     window.addEventListener('resize', resize);
@@ -34,26 +35,31 @@ export default function MatrixRain() {
       'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>{}[]|/\\';
 
     let cols = Math.floor(canvas.width / fontSize);
-    const drops: number[] = Array(cols).fill(1);
+    const drops: number[] = [];
+    for (let i = 0; i < cols; i++) {
+      drops[i] = Math.floor(Math.random() * -40); // staggered starting heights off-screen
+    }
 
     const draw = () => {
-      ctx.fillStyle = 'rgba(10, 14, 10, 0.05)';
+      ctx.fillStyle = 'rgba(10, 14, 10, 0.08)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
 
       for (let i = 0; i < drops.length; i++) {
-        const char = chars[Math.floor(Math.random() * chars.length)];
+        // Only draw drops that are on-screen
+        if (drops[i] >= 0) {
+          const char = chars[Math.floor(Math.random() * chars.length)];
 
-        // Brighter for leading character
-        if (drops[i] * fontSize === Math.floor(Math.random() * canvas.height)) {
-          ctx.fillStyle = '#FFFFFF';
-        } else {
-          const alpha = Math.random() * 0.5 + 0.3;
-          ctx.fillStyle = `rgba(0, 255, 65, ${alpha})`;
+          // Randomly draw white highlight characters to simulate matrix glitch
+          if (Math.random() > 0.98) {
+            ctx.fillStyle = '#FFFFFF';
+          } else {
+            ctx.fillStyle = '#00FF41';
+          }
+
+          ctx.fillText(char, i * fontSize, drops[i] * fontSize);
         }
-
-        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
 
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
@@ -61,9 +67,15 @@ export default function MatrixRain() {
         drops[i]++;
       }
 
-      // Resize-aware column count
+      // Resize-aware column count update (handles both growth and shrinkage)
       cols = Math.floor(canvas.width / fontSize);
-      while (drops.length < cols) drops.push(1);
+      if (drops.length > cols) {
+        drops.length = cols;
+      } else {
+        while (drops.length < cols) {
+          drops.push(Math.floor(Math.random() * -40));
+        }
+      }
     };
 
     const interval = setInterval(draw, 50);

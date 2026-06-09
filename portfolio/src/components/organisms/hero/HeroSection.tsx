@@ -234,26 +234,34 @@ export default function HeroSection() {
         </div>
 
         {/* Scroll hint */}
-        <a
-          href="#about"
-          aria-label="Scroll to about section"
+        <div
           style={{
-            display: 'inline-flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '4px',
-            textDecoration: 'none',
-            color: 'var(--color-text-muted)',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.7rem',
-            animation: 'float 3s ease-in-out infinite',
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
             marginTop: 'var(--space-3xl)',
-            cursor: 'pointer',
           }}
         >
-          <span>scroll</span>
-          <ChevronDown size={16} color="var(--color-primary)" />
-        </a>
+          <a
+            href="#about"
+            aria-label="Scroll to about section"
+            style={{
+              display: 'inline-flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '4px',
+              textDecoration: 'none',
+              color: 'var(--color-text-muted)',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.7rem',
+              animation: 'float 3s ease-in-out infinite',
+              cursor: 'pointer',
+            }}
+          >
+            <span>scroll</span>
+            <ChevronDown size={16} color="var(--color-primary)" />
+          </a>
+        </div>
       </div>
     </section>
   );
