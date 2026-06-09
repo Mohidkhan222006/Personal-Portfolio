@@ -1,0 +1,412 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS — Cyber Terminal Theme
+   ============================================================ */
+:root {
+  /* Brand */
+  --color-primary:        #00FF41;
+  --color-primary-dim:    #00CC33;
+  --color-primary-glow:   rgba(0, 255, 65, 0.15);
+  --color-primary-border: rgba(0, 255, 65, 0.25);
+
+  /* Backgrounds */
+  --color-bg:             #0A0E0A;
+  --color-bg-alt:         #0D120D;
+  --color-surface:        #111811;
+  --color-surface-alt:    #162116;
+  --color-surface-glass:  rgba(17, 24, 17, 0.7);
+
+  /* Borders */
+  --color-border:         rgba(0, 255, 65, 0.12);
+  --color-border-hover:   rgba(0, 255, 65, 0.35);
+
+  /* Text */
+  --color-text-primary:   #E8F5E8;
+  --color-text-secondary: #7A9E7A;
+  --color-text-muted:     #4A6A4A;
+  --color-text-code:      #00FF41;
+
+  /* Semantic */
+  --color-success:        #00FF41;
+  --color-warning:        #FFB800;
+  --color-danger:         #FF4444;
+  --color-info:           #00D4FF;
+
+  /* Spacing */
+  --space-xs:   0.25rem;
+  --space-s:    0.5rem;
+  --space-m:    1rem;
+  --space-l:    1.5rem;
+  --space-xl:   2rem;
+  --space-2xl:  3rem;
+  --space-3xl:  4rem;
+  --space-4xl:  6rem;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Radius */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-glow:       0 0 20px rgba(0, 255, 65, 0.15);
+  --shadow-glow-lg:    0 0 40px rgba(0, 255, 65, 0.2);
+  --shadow-card:       0 4px 32px rgba(0, 0, 0, 0.6);
+  --shadow-inset:      inset 0 1px 0 rgba(0, 255, 65, 0.05);
+
+  /* Transitions */
+  --transition-fast:   150ms ease;
+  --transition-base:   300ms ease;
+  --transition-slow:   600ms ease;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Scrollbar — cyber style */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-dim);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+
+/* Selection */
+::selection {
+  background: rgba(0, 255, 65, 0.2);
+  color: var(--color-primary);
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+.font-mono, code, pre, .terminal {
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.container-portfolio {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.section {
+  padding: var(--space-4xl) 0;
+}
+
+/* Glow text */
+.text-glow {
+  color: var(--color-primary);
+  text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+}
+
+/* Glass card */
+.glass-card {
+  background: var(--color-surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.glass-card:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Terminal prompt prefix */
+.terminal-prompt::before {
+  content: '> ';
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+}
+
+/* Badge/Tag */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  background: rgba(0, 255, 65, 0.05);
+  transition: all var(--transition-fast);
+}
+
+.tag:hover, .tag.active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-glow);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.2);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #00FF41 0%, #00D4FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section label */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+/* Divider */
+.cyber-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  opacity: 0.3;
+  margin: var(--space-2xl) 0;
+}
+
+/* ============================================================
+   SCAN LINE EFFECT (Hero)
+   ============================================================ */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 65, 0.01) 2px,
+    rgba(0, 255, 65, 0.01) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   GLITCH ANIMATION
+   ============================================================ */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); }
+  40% { transform: translate(2px, -1px); clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); }
+  60% { transform: translate(-1px, 2px); clip-path: polygon(0 40%, 100% 40%, 100% 60%, 0 60%); }
+  80% { transform: translate(1px, -2px); clip-path: polygon(0 0%, 100% 0%, 100% 20%, 0 20%); }
+}
+
+@keyframes glitch-before {
+  0%, 100% { transform: translate(0); opacity: 0; }
+  30% { transform: translate(-3px, 0); color: #00D4FF; opacity: 0.8; }
+  70% { transform: translate(3px, 0); color: #FF4444; opacity: 0.6; }
+}
+
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: var(--color-primary);
+}
+
+.glitch::before {
+  animation: glitch-before 3s infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: cursor-blink 1s step-start infinite;
+}
+
+@keyframes matrix-fade {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 65, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(0, 255, 65, 0.5), 0 0 60px rgba(0, 255, 65, 0.1); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding: 12px 28px;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: #33FF66;
+  box-shadow: var(--shadow-glow-lg);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding: 11px 28px;
+  background: transparent;
+  color: var(--color-primary);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background: var(--color-primary-glow);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
+.progress-bar {
+  height: 4px;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary-dim), var(--color-primary));
+  border-radius: var(--radius-full);
+  transition: width 1s ease;
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+}
+
+/* ============================================================
+   TIMELINE
+   ============================================================ */
+.timeline-line {
+  width: 2px;
+  background: linear-gradient(180deg, var(--color-primary), transparent);
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.5);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   SCROLL PROGRESS BAR
+   ============================================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--color-primary);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px var(--color-primary);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .container-portfolio {
+    padding: 0 var(--space-m);
+  }
+
+  .section {
+    padding: var(--space-2xl) 0;
+  }
+}
