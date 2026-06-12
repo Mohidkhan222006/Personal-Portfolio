@@ -777,6 +777,8 @@ export default function CyberSamurai() {
               fontFamily: 'var(--font-mono)',
               border: '1px solid var(--color-border)',
               background: 'rgba(10, 14, 10, 0.9)',
+              maxHeight: '505px', // Constrain height to match the canvas sandbox panel and enable scrolling
+              minHeight: 0,
             }}
           >
             {/* Console Header */}
