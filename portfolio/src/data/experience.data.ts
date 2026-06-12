@@ -28,45 +28,53 @@ export const experiences: Experience[] = [
 
   // ─── Certifications & Courses ─────────────────────
   {
-    id: 'cert-tcm',
-    title: 'Practical Ethical Hacking & Security Courses',
-    company: 'TCM Security',
-    type: 'certification',
-    period: '2024 – 2025',
-    current: false,
-    description: [
-      'Completed industry-standard penetration testing courses covering practical offensive security techniques.',
-      'Topics: Active Directory attacks, web application hacking, network pentesting, privilege escalation.',
-      'Hands-on labs simulating real-world attack and defense scenarios.',
-    ],
-    tags: ['TCM Security', 'Ethical Hacking', 'Pentesting', 'Active Directory'],
-  },
-  {
-    id: 'cert-thm-htb',
-    title: 'TryHackMe & Hack The Box',
-    company: 'TryHackMe / Hack The Box',
-    type: 'certification',
-    period: '2024 – Present',
-    current: true,
-    description: [
-      'Actively solving CTF challenges and guided learning paths on TryHackMe and Hack The Box.',
-      'Skill areas: web exploitation, reverse engineering, privilege escalation, cryptography, OSINT.',
-      'Consistent practice to sharpen offensive security and CTF problem-solving abilities.',
-    ],
-    tags: ['TryHackMe', 'Hack The Box', 'CTF', 'Web Exploitation', 'Reverse Engineering'],
-  },
-  {
     id: 'cert-google-ai',
-    title: 'Google AI Essentials',
+    title: 'Google AI Specialization',
     company: 'Google',
     type: 'certification',
-    period: '2024',
+    period: 'May 2026',
     current: false,
     description: [
-      'Completed Google\'s AI Essentials course covering foundational concepts in artificial intelligence.',
-      'Topics include machine learning fundamentals, AI tools, and practical AI applications in real workflows.',
+      'Certified by Google in AI Essentials. Explored the intersection of artificial intelligence and professional efficiency to drive smarter, faster results.',
+      'Completed comprehensive modules: AI Fundamentals, AI for App Building, AI for Content Creation, AI for Brainstorming & Planning, AI for Research & Insights, and AI for Writing & Communicating.',
     ],
-    tags: ['Google', 'AI', 'Machine Learning', 'Certification'],
+    tags: ['Google AI', 'Artificial Intelligence (AI)', 'Software Development', 'App Building', 'Research'],
+  },
+  {
+    id: 'cert-thm-jr-pentester',
+    title: 'Jr Penetration Tester',
+    company: 'TryHackMe',
+    type: 'certification',
+    period: 'May 2026',
+    current: false,
+    description: [
+      'Specialized training in offensive security methodologies, including network security analysis, web hacking, and post-exploitation techniques across various operating systems.',
+    ],
+    tags: ['TryHackMe', 'Cybersecurity', 'Linux', 'Pentesting', 'Web Exploitation'],
+  },
+  {
+    id: 'cert-thm-cyber-101',
+    title: 'Cyber Security 101',
+    company: 'TryHackMe',
+    type: 'certification',
+    period: 'Mar 2026',
+    current: false,
+    description: [
+      'Foundational training in security fundamentals, network defense, Linux security, cryptography, and basic offensive security concepts.',
+    ],
+    tags: ['TryHackMe', 'Cybersecurity', 'Linux', 'Network Security'],
+  },
+  {
+    id: 'cert-datacamp-sql',
+    title: 'SQL Specialization (Intro & Intermediate)',
+    company: 'DataCamp',
+    type: 'certification',
+    period: 'May 2026',
+    current: false,
+    description: [
+      'Mastered database query writing, covering basic query filters, table joins, aggregations, database subqueries, and analytical functions on DataCamp.',
+    ],
+    tags: ['DataCamp', 'SQL', 'Databases', 'Data Analysis'],
   },
 
   // ─── Work / Projects ──────────────────────────────
