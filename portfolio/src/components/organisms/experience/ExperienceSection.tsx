@@ -25,7 +25,7 @@ export default function ExperienceSection() {
     >
       <div className="container-portfolio">
         <p className="section-label" style={{ marginBottom: 'var(--space-s)' }}>
-          {"// 04. experience"}
+          {"// 04. education_and_certifications"}
         </p>
 
         <h2
@@ -35,7 +35,7 @@ export default function ExperienceSection() {
             marginBottom: 'var(--space-2xl)',
           }}
         >
-          My <span className="text-glow">Journey</span>
+          Education & <span className="text-glow">Certifications</span>
         </h2>
 
         {/* Timeline */}
@@ -64,7 +64,9 @@ export default function ExperienceSection() {
             }}
           />
 
-          {experiences.map((exp) => {
+          {experiences
+            .filter((exp) => exp.type === 'education' || exp.type === 'certification')
+            .map((exp) => {
             const Icon = TYPE_ICONS[exp.type];
             const color = TYPE_COLORS[exp.type];
 

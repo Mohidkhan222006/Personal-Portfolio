@@ -71,6 +71,34 @@ export const experiences: Experience[] = [
 
   // ─── Work / Projects ──────────────────────────────
   {
+    id: 'work-cyber-intern',
+    title: 'Cybersecurity Intern',
+    company: 'SecureOps Solutions (Placeholder)',
+    type: 'work',
+    period: 'Jun 2025 – Aug 2025',
+    current: false,
+    description: [
+      'Assisted in vulnerability scans and security posture reviews for client web portals.',
+      'Documented pentest results and drafted remediation guides for application development teams.',
+      'Configured intrusion detection alerts and monitored mock SIEM dashboards for security events.',
+    ],
+    tags: ['Vulnerability Assessment', 'Nmap', 'Burp Suite', 'SIEM', 'Security Audit'],
+  },
+  {
+    id: 'work-dev-intern',
+    title: 'Software Development Intern',
+    company: 'Apex Tech Labs (Placeholder)',
+    type: 'work',
+    period: 'Jan 2025 – Apr 2025',
+    current: false,
+    description: [
+      'Contributed to client-facing web portals using React, Next.js, and TypeScript.',
+      'Refactored legacy REST APIs in Node.js, improving processing speed and testing code coverage.',
+      'Participated in sprint planning meetings and codebase security auditing.',
+    ],
+    tags: ['Next.js', 'React', 'Node.js', 'TypeScript', 'Git'],
+  },
+  {
     id: 'work-freelance',
     title: 'Penetration Tester & Developer',
     company: 'Freelance / Self-Directed',

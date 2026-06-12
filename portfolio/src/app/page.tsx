@@ -5,6 +5,7 @@ import AboutSection from '@/components/organisms/about/AboutSection';
 import SkillsSection from '@/components/organisms/skills/SkillsSection';
 import CyberSamurai from '@/components/organisms/game/CyberSamurai';
 import ProjectsSection from '@/components/organisms/projects/ProjectsSection';
+import WorkSection from '@/components/organisms/work/WorkSection';
 import ExperienceSection from '@/components/organisms/experience/ExperienceSection';
 import ContactSection from '@/components/organisms/contact/ContactSection';
 
@@ -18,6 +19,7 @@ export default function HomePage() {
         <SkillsSection />
         <CyberSamurai />
         <ProjectsSection />
+        <WorkSection />
         <ExperienceSection />
         <ContactSection />
       </main>
