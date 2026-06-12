@@ -75,21 +75,21 @@ export default function AboutSection() {
                 marginBottom: 'var(--space-xl)',
               }}
             >
-              On the development side, I build web applications with Python, JavaScript, and
-              Next.js — always with security baked in from the start. My goal is to become a
-              well-rounded security engineer who can both attack and defend.
+              On the development side, I work as a Front-end AI Engineer, designing streaming interfaces
+              and AI-driven features with Next.js, TypeScript, and Python. My goal is to build secure, robust software
+              at the intersection of AI integration and defensive engineering.
             </p>
 
             {/* Tags */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {[
+                'Front-end AI Engineer',
+                'AI Engineering',
                 'Penetration Testing',
                 'CTF Player',
+                'Next.js / TS',
                 'TryHackMe',
                 'Hack The Box',
-                'Python',
-                'TCM Security',
-                'Kali Linux',
                 'NEDUET \'29',
               ].map((tag) => (
                 <span key={tag} className="tag">
