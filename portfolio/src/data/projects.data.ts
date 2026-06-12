@@ -98,4 +98,18 @@ export const projects: Project[] = [
     featured: true,
     year: 2025,
   },
+  {
+    slug: 'perma-website',
+    title: 'Custom Shopify Jewelry Store',
+    description:
+      'A customized, premium Shopify jewelry storefront built using Liquid templates, CSS, and interactive JavaScript.',
+    longDescription:
+      'Redesigned and customized a premium e-commerce Shopify storefront for a jewelry brand (Perma). Developed custom Liquid sections and snippets, optimized mobile-first layouts, integrated responsive custom accordions, and streamlined navigation structures using custom CSS and JavaScript to enhance user conversion.',
+    tags: ['development'],
+    techStack: ['Shopify', 'Liquid', 'CSS', 'JavaScript', 'E-commerce'],
+    imageUrl: '/assets/images/perma-website.png',
+    featured: true,
+    year: 2026,
+  },
 ];
+
