@@ -109,8 +109,8 @@ export const experiences: Experience[] = [
     title: 'Cyber Security Intern',
     company: 'Arch Technologies',
     type: 'work',
-    period: 'Apr 2026 – Present',
-    current: true,
+    period: 'Apr 2026 – Jun 2026',
+    current: false,
     description: [
       'Assisting in conducting web and network penetration tests to detect security flaws.',
       'Analyzing and reporting vulnerability scan results with recommendations for remediation.',
