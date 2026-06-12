@@ -4,7 +4,7 @@ import { Shield, Code, Target, BookOpen } from 'lucide-react';
 
 const stats = [
   { value: '1st', label: 'Year at NEDUET', icon: BookOpen },
-  { value: '5+', label: 'CTFs Competed', icon: Target },
+  { value: '50+', label: 'CTFs Competed', icon: Target },
   { value: '2+', label: 'Security Courses', icon: Shield },
   { value: '100%', label: 'Passion for Security', icon: Code },
 ];
