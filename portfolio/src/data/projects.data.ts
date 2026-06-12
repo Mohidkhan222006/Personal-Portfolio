@@ -84,4 +84,18 @@ export const projects: Project[] = [
     featured: true,
     year: 2026,
   },
+  {
+    slug: 'dw-reminder',
+    title: 'DW-Reminder',
+    description:
+      'A lightweight Python-based background desktop utility that sends periodic hydration reminders.',
+    longDescription:
+      'A simple, lightweight background utility written in Python. Automatically schedules and triggers desktop system notifications prompting you to stay hydrated, using native OS notification APIs and built-in Python libraries.',
+    tags: ['tool', 'development'],
+    techStack: ['Python', 'Plyer API', 'System Notifications'],
+    githubUrl: 'https://github.com/Mohidkhan222006/DW-Reminder',
+    imageUrl: '/assets/images/dw-reminder.png',
+    featured: true,
+    year: 2025,
+  },
 ];
