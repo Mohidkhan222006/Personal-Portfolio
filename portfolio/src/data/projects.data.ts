@@ -32,11 +32,11 @@ export const projects: Project[] = [
     slug: 'kali-mcp-server',
     title: 'Kali Linux MCP Server',
     description:
-      'A Model Context Protocol (MCP) server exposing Kali Linux penetration testing utilities to LLM agents.',
+      'A Python-based Model Context Protocol (MCP) server exposing 56 pentesting tools to Llama 3 & Ollama agents.',
     longDescription:
-      'Designed and implemented a custom Model Context Protocol (MCP) server that exposes powerful Kali Linux command-line utilities (like Nmap scanner sweeps, searchsploit exploit index searches, and Metasploit payload setups) as executable tools to AI assistant clients. Enables LLMs to execute safe, authorized network security sweeps and CVE exploit lookup tasks directly inside sandboxed pentesting boxes.',
+      'Designed and implemented a custom Model Context Protocol (MCP) server in Python that exposes 56 specialized command-line tools for security enumeration and exploitation to AI agents. Built to integrate with local Ollama configurations running Llama 3 (3B) models, enabling LLM-driven agents to automate security scanning, vulnerability sweeps, and localized exploitation scripts.',
     tags: ['security', 'tool'],
-    techStack: ['Model Context Protocol (MCP)', 'TypeScript', 'Node.js', 'Kali Linux', 'Bash'],
+    techStack: ['Model Context Protocol (MCP)', 'Python', 'Ollama', 'Llama 3 (3B)', 'Kali Linux', 'Bash'],
     githubUrl: 'https://github.com/Mohidkhan222006/kali-mcp-server',
     imageUrl: '/assets/images/kali-mcp.png',
     featured: true,
