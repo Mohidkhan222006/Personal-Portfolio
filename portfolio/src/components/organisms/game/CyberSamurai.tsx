@@ -156,7 +156,7 @@ export default function CyberSamurai() {
       };
 
       state.threats.push(newThreat);
-      addLog('warn', `ALARM: Threat identified: ${newThreat.name} spawning at perimeter.`);
+      addLog('warn', `Threat detected: ${newThreat.name}`);
     };
 
     const spawnInterval = setInterval(spawnThreat, 4000);
@@ -362,7 +362,7 @@ export default function CyberSamurai() {
           if (targetIdx !== -1) {
             const killed = state.threats[targetIdx];
             spawnExplosion(killed.x, killed.y);
-            addLog('success', `SUCCESS: Quarantined ${killed.name} via secure slash slice.`);
+            addLog('success', `Quarantined ${killed.name}`);
             state.threats.splice(targetIdx, 1);
             state.kills += 1;
             setKills(state.kills);
@@ -599,7 +599,7 @@ export default function CyberSamurai() {
           state.samurai.tx = (targetThreat as Threat).x;
           state.samurai.ty = (targetThreat as Threat).y;
         } else {
-          addLog('info', `COMMAND: Samurai executing tactical maneuver to coordinates [X:${Math.floor(clickX)}, Y:${Math.floor(clickY)}].`);
+          addLog('info', `Tactical dash to [X:${Math.floor(clickX)}, Y:${Math.floor(clickY)}]`);
         }
       }
     };
@@ -793,11 +793,28 @@ export default function CyberSamurai() {
                 fontSize: '0.75rem',
               }}
             >
-              <Terminal size={14} style={{ marginRight: '6px' }} />
-              <span style={{ flex: 1 }}>threat_log_listener.log</span>
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <span>KILLED: <strong style={{ color: 'var(--color-primary)' }}>{kills}</strong></span>
-                <span>INTEGRITY: <strong style={{ color: 'var(--color-primary)' }}>100%</strong></span>
+              <Terminal size={14} style={{ marginRight: '6px', flexShrink: 0 }} />
+              <span
+                style={{
+                  flex: 1,
+                  minWidth: 0,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  marginRight: '8px',
+                }}
+              >
+                threat_log_listener.log
+              </span>
+              <div style={{ display: 'flex', gap: '12px', flexShrink: 0 }}>
+                <span style={{ whiteSpace: 'nowrap' }}>
+                  KILLED:{' '}
+                  <strong style={{ color: 'var(--color-primary)' }}>{kills}</strong>
+                </span>
+                <span style={{ whiteSpace: 'nowrap' }}>
+                  INTEGRITY:{' '}
+                  <strong style={{ color: 'var(--color-primary)' }}>100%</strong>
+                </span>
               </div>
             </div>
 
@@ -806,6 +823,7 @@ export default function CyberSamurai() {
               style={{
                 flex: 1,
                 overflowY: 'auto',
+                overflowX: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '8px',
