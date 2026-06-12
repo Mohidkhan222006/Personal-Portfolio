@@ -180,7 +180,7 @@ export const skills: Skill[] = [
   {
     name: 'JavaScript / TypeScript',
     category: 'languages',
-    status: 'Advanced',
+    status: 'Expert',
     command: 'tsc --noEmit # Check TypeScript types',
     details: [
       'Object-oriented and functional paradigm implementations',
@@ -191,7 +191,7 @@ export const skills: Skill[] = [
   {
     name: 'C / C++',
     category: 'languages',
-    status: 'Intermediate',
+    status: 'Advanced',
     command: 'gcc -o buffer_overflow vuln.c',
     details: [
       'Low-level memory management and pointer manipulations',
@@ -237,7 +237,7 @@ export const skills: Skill[] = [
   {
     name: 'Next.js / React',
     category: 'development',
-    status: 'Advanced',
+    status: 'Expert',
     command: 'npm run build # Build production bundle',
     details: [
       'Client and Server Components file structure management',
@@ -246,9 +246,20 @@ export const skills: Skill[] = [
     ],
   },
   {
+    name: 'Frontend AI Engineering',
+    category: 'development',
+    status: 'Advanced',
+    command: 'ai-integrate --stream --model llm-interface',
+    details: [
+      'Integrating generative AI models and LLM APIs into web applications',
+      'Designing interactive, state-driven interfaces for real-time AI outputs',
+      'Optimizing prompt-handling pipelines and streaming chat interfaces',
+    ],
+  },
+  {
     name: 'Node.js',
     category: 'development',
-    status: 'Intermediate',
+    status: 'Advanced',
     command: 'node -e "require(\'crypto\').randomBytes(32)"',
     details: [
       'RESTful backend creation using Express.js Framework',
@@ -259,12 +270,23 @@ export const skills: Skill[] = [
   {
     name: 'REST APIs',
     category: 'development',
-    status: 'Advanced',
+    status: 'Expert',
     command: 'curl -i -X GET https://api.local/status',
     details: [
       'JSON request payload validation utilizing Zod schema schemas',
       'CORS security policies and request rate limiting',
       'Authentication headers, JWT parsing, and HTTP status handling',
+    ],
+  },
+  {
+    name: 'Database & ORM',
+    category: 'development',
+    status: 'Advanced',
+    command: 'prisma db push # Sync schemas',
+    details: [
+      'Designing relational database schemas using PostgreSQL and MySQL',
+      'Utilizing Prisma ORM for schema migration and type-safe data access',
+      'Writing optimized queries, tables, and custom database indices',
     ],
   },
 ];
