@@ -22,13 +22,20 @@ export default function MatrixRain() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const resize = () => {
-      const parent = canvas.parentElement;
-      canvas.width = parent ? parent.clientWidth : window.innerWidth;
-      canvas.height = parent ? parent.clientHeight : window.innerHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const width = entry.contentRect.width || parent.clientWidth;
+        const height = entry.contentRect.height || parent.clientHeight;
+        if (width > 0 && height > 0) {
+          canvas.width = width;
+          canvas.height = height;
+        }
+      }
+    });
+    resizeObserver.observe(parent);
 
     const fontSize = 14;
     const chars =
@@ -82,7 +89,7 @@ export default function MatrixRain() {
 
     return () => {
       clearInterval(interval);
-      window.removeEventListener('resize', resize);
+      resizeObserver.disconnect();
     };
   }, [mounted]);
 

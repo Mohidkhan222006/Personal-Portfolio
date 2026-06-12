@@ -109,22 +109,27 @@ export default function CyberSamurai() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Dimensions setup
-    const resize = () => {
-      const parent = canvas.parentElement;
-      canvas.width = parent ? parent.clientWidth : 800;
-      canvas.height = 460; // Increased visual height for better presence
-      
-      // Center samurai initially
-      if (stateRef.current.samurai.state === 'idle') {
-        stateRef.current.samurai.x = canvas.width / 2;
-        stateRef.current.samurai.y = canvas.height / 2;
-        stateRef.current.samurai.tx = canvas.width / 2;
-        stateRef.current.samurai.ty = canvas.height / 2;
+    const parent = canvas.parentElement;
+    if (!parent) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const width = entry.contentRect.width || parent.clientWidth;
+        if (width > 0) {
+          canvas.width = width;
+          canvas.height = 460;
+          
+          // Center samurai initially
+          if (stateRef.current.samurai.state === 'idle') {
+            stateRef.current.samurai.x = canvas.width / 2;
+            stateRef.current.samurai.y = canvas.height / 2;
+            stateRef.current.samurai.tx = canvas.width / 2;
+            stateRef.current.samurai.ty = canvas.height / 2;
+          }
+        }
       }
-    };
-    resize();
-    window.addEventListener('resize', resize);
+    });
+    resizeObserver.observe(parent);
 
     let threatIdCounter = 0;
     const state = stateRef.current;
@@ -237,66 +242,68 @@ export default function CyberSamurai() {
       ctx.stroke();
 
       // 2. Physics & Threat Updates
-      state.threats.forEach((threat, idx) => {
+      const activeThreats: Threat[] = [];
+      state.threats.forEach((threat) => {
         threat.x += threat.vx;
         threat.y += threat.vy;
 
         // Bounce back from boundaries
         if (threat.x < -40 || threat.x > canvas.width + 40 || threat.y < -40 || threat.y > canvas.height + 40) {
-          state.threats.splice(idx, 1);
           addLog('info', `Threat ${threat.name} exited perimeter.`);
-          return;
-        }
+        } else {
+          activeThreats.push(threat);
 
-        // Draw threat node with mechanical elements
-        ctx.save();
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#FF4444';
-        
-        // Red glowing outer ring (Spinning shield segment)
-        ctx.strokeStyle = 'rgba(255, 68, 68, 0.85)';
-        ctx.lineWidth = 1.5;
-        const spinSpeed = time * 2;
-        ctx.beginPath();
-        for (let i = 0; i < 4; i++) {
-          const startAngle = spinSpeed + (i * Math.PI) / 2;
-          const endAngle = startAngle + Math.PI / 4;
-          ctx.arc(threat.x, threat.y, threat.radius + 3, startAngle, endAngle);
-        }
-        ctx.stroke();
-
-        // Pulsing virus core
-        const pulseRadius = threat.radius + Math.sin(time * 6 + threat.id) * 2;
-        ctx.fillStyle = 'rgba(255, 68, 68, 0.25)';
-        ctx.beginPath();
-        ctx.arc(threat.x, threat.y, pulseRadius, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Mechanical spider-like legs (6 leg lines wriggling)
-        ctx.strokeStyle = 'rgba(255, 68, 68, 0.6)';
-        ctx.lineWidth = 2;
-        for (let a = 0; a < 6; a++) {
-          const legAngle = (a * Math.PI) / 3 + Math.sin(time * 2 + threat.id) * 0.2;
+          // Draw threat node with mechanical elements
+          ctx.save();
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = '#FF4444';
+          
+          // Red glowing outer ring (Spinning shield segment)
+          ctx.strokeStyle = 'rgba(255, 68, 68, 0.85)';
+          ctx.lineWidth = 1.5;
+          const spinSpeed = time * 2;
           ctx.beginPath();
-          ctx.moveTo(threat.x + Math.cos(legAngle) * threat.radius, threat.y + Math.sin(legAngle) * threat.radius);
-          ctx.lineTo(threat.x + Math.cos(legAngle) * (threat.radius + 8), threat.y + Math.sin(legAngle) * (threat.radius + 8));
+          for (let i = 0; i < 4; i++) {
+            const startAngle = spinSpeed + (i * Math.PI) / 2;
+            const endAngle = startAngle + Math.PI / 4;
+            ctx.arc(threat.x, threat.y, threat.radius + 3, startAngle, endAngle);
+          }
           ctx.stroke();
+
+          // Pulsing virus core
+          const pulseRadius = threat.radius + Math.sin(time * 6 + threat.id) * 2;
+          ctx.fillStyle = 'rgba(255, 68, 68, 0.25)';
+          ctx.beginPath();
+          ctx.arc(threat.x, threat.y, pulseRadius, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Mechanical spider-like legs (6 leg lines wriggling)
+          ctx.strokeStyle = 'rgba(255, 68, 68, 0.6)';
+          ctx.lineWidth = 2;
+          for (let a = 0; a < 6; a++) {
+            const legAngle = (a * Math.PI) / 3 + Math.sin(time * 2 + threat.id) * 0.2;
+            ctx.beginPath();
+            ctx.moveTo(threat.x + Math.cos(legAngle) * threat.radius, threat.y + Math.sin(legAngle) * threat.radius);
+            ctx.lineTo(threat.x + Math.cos(legAngle) * (threat.radius + 8), threat.y + Math.sin(legAngle) * (threat.radius + 8));
+            ctx.stroke();
+          }
+
+          // Inner core
+          ctx.fillStyle = '#FF4444';
+          ctx.beginPath();
+          ctx.arc(threat.x, threat.y, 6, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.restore();
+
+          // Label
+          ctx.fillStyle = 'rgba(255, 68, 68, 0.9)';
+          ctx.font = "10px 'JetBrains Mono', monospace";
+          ctx.textAlign = 'center';
+          ctx.fillText(threat.name, threat.x, threat.y - threat.radius - 12);
         }
-
-        // Inner core
-        ctx.fillStyle = '#FF4444';
-        ctx.beginPath();
-        ctx.arc(threat.x, threat.y, 6, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.restore();
-
-        // Label
-        ctx.fillStyle = 'rgba(255, 68, 68, 0.9)';
-        ctx.font = "10px 'JetBrains Mono', monospace";
-        ctx.textAlign = 'center';
-        ctx.fillText(threat.name, threat.x, threat.y - threat.radius - 12);
       });
+      state.threats = activeThreats;
 
       // 3. Samurai AI Auto-Targeting
       const samurai = state.samurai;
@@ -545,20 +552,20 @@ export default function CyberSamurai() {
       }
 
       // 6. Binary & Glitch Particles Update & Draw
-      state.particles.forEach((p, idx) => {
+      const activeParticles: Particle[] = [];
+      state.particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
         p.alpha -= 0.025;
 
-        if (p.alpha <= 0) {
-          state.particles.splice(idx, 1);
-          return;
+        if (p.alpha > 0) {
+          activeParticles.push(p);
+          ctx.fillStyle = `${p.color}${p.alpha})`;
+          ctx.font = `${p.size}px 'JetBrains Mono', monospace`;
+          ctx.fillText(p.text, p.x, p.y);
         }
-
-        ctx.fillStyle = `${p.color}${p.alpha})`;
-        ctx.font = `${p.size}px 'JetBrains Mono', monospace`;
-        ctx.fillText(p.text, p.x, p.y);
       });
+      state.particles = activeParticles;
 
       ctx.restore();
 
@@ -602,7 +609,7 @@ export default function CyberSamurai() {
     return () => {
       cancelAnimationFrame(animationFrameId);
       clearInterval(spawnInterval);
-      window.removeEventListener('resize', resize);
+      resizeObserver.disconnect();
       canvas.removeEventListener('click', handleMouseClick);
     };
   }, [mounted, autoMode]);
