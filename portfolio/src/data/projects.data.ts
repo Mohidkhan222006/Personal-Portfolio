@@ -56,4 +56,18 @@ export const projects: Project[] = [
     featured: true,
     year: 2026,
   },
+  {
+    slug: 'local-vault',
+    title: 'The Local Vault',
+    description:
+      'An encrypted in-memory system tray clipboard manager and scratchpad built with Electron and React.',
+    longDescription:
+      'Developed a lightweight, local-first system tray desktop application using Electron, React, and TypeScript. Acts as a secure clipboard manager and markdown scratchpad featuring zero-disk persistence, automated clipboard clear delay, memory zero-filling on locks, and robust cryptography using Node.js native crypto module (AES-256-GCM, Scrypt KDF).',
+    tags: ['security', 'development'],
+    techStack: ['Electron', 'React', 'TypeScript', 'Zustand', 'AES-256-GCM', 'Scrypt KDF'],
+    githubUrl: 'https://github.com/Mohidkhan222006/The-Local-Vault',
+    imageUrl: '/assets/images/local-vault.png',
+    featured: true,
+    year: 2026,
+  },
 ];
