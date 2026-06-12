@@ -42,4 +42,18 @@ export const projects: Project[] = [
     featured: true,
     year: 2026,
   },
+  {
+    slug: 'wellness-app',
+    title: 'Wellness Tracker App',
+    description:
+      'A cross-platform wellness and health tracking application built using Flutter and Dart.',
+    longDescription:
+      'A production-grade, cross-platform wellness application built using Flutter and Dart to monitor personal health metrics (such as sleep cycles, hydration levels, and exercise routines). Features clean health analytics dashboards, an offline-first data model, and compilation configurations supporting mobile and desktop platforms.',
+    tags: ['development'],
+    techStack: ['Flutter', 'Dart', 'SQLite', 'CMake', 'C++', 'Swift'],
+    githubUrl: 'https://github.com/Mohidkhan222006/wellness_app',
+    imageUrl: '/assets/images/wellness-app.png',
+    featured: true,
+    year: 2026,
+  },
 ];
