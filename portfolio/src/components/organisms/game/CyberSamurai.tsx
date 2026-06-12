@@ -20,9 +20,10 @@ interface Particle {
   y: number;
   vx: number;
   vy: number;
-  char: '0' | '1';
+  text: string;
   alpha: number;
   size: number;
+  color: string;
 }
 
 interface LogEntry {
@@ -40,6 +41,16 @@ const THREAT_NAMES = [
   'SQL.Injection.Payload',
   'DDoS.Botnet.Node',
   'Phishing.Daemon',
+];
+
+const GLITCH_WORDS = [
+  'ACCESS_DENIED',
+  'QUARANTINE_OK',
+  'THREAT_CLEARED',
+  'VIRUS_WIPED',
+  '0xEF_PATCH',
+  'PORT_CLOSED',
+  'SYSTEM_SECURE',
 ];
 
 export default function CyberSamurai() {
@@ -102,7 +113,7 @@ export default function CyberSamurai() {
     const resize = () => {
       const parent = canvas.parentElement;
       canvas.width = parent ? parent.clientWidth : 800;
-      canvas.height = 400; // Fixed visual dashboard height
+      canvas.height = 460; // Increased visual height for better presence
       
       // Center samurai initially
       if (stateRef.current.samurai.state === 'idle') {
@@ -123,7 +134,7 @@ export default function CyberSamurai() {
       if (state.threats.length >= 6) return;
       const radius = 18;
       const x = Math.random() > 0.5 ? -radius : canvas.width + radius;
-      const y = Math.random() * (canvas.height - 100) + 50;
+      const y = Math.random() * (canvas.height - 120) + 60;
       const angle = Math.atan2(canvas.height / 2 - y, canvas.width / 2 - x) + (Math.random() - 0.5) * 0.5;
       const speed = Math.random() * 1.2 + 0.8;
 
@@ -145,19 +156,37 @@ export default function CyberSamurai() {
 
     const spawnInterval = setInterval(spawnThreat, 4000);
 
-    // Spawn binary splash particles
+    // Spawn binary and code glitch splash particles
     const spawnExplosion = (x: number, y: number) => {
-      for (let i = 0; i < 25; i++) {
+      // Spawn binary particles
+      for (let i = 0; i < 20; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 4 + 2;
+        const speed = Math.random() * 3.5 + 1.5;
         state.particles.push({
           x,
           y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
-          char: Math.random() > 0.5 ? '1' : '0',
+          text: Math.random() > 0.5 ? '1' : '0',
           alpha: 1.0,
           size: Math.floor(Math.random() * 6) + 10,
+          color: 'rgba(255, 68, 68, ',
+        });
+      }
+
+      // Spawn word particles
+      for (let i = 0; i < 3; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 2 + 1;
+        state.particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          text: GLITCH_WORDS[Math.floor(Math.random() * GLITCH_WORDS.length)],
+          alpha: 1.0,
+          size: 11,
+          color: 'rgba(0, 255, 65, ',
         });
       }
     };
@@ -199,6 +228,14 @@ export default function CyberSamurai() {
         ctx.stroke();
       }
 
+      // Draw faint circular scanning radar sweep
+      ctx.strokeStyle = 'rgba(0, 255, 65, 0.04)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      const sweepRadius = (time * 80) % (canvas.width / 1.5);
+      ctx.arc(canvas.width / 2, canvas.height / 2, sweepRadius, 0, Math.PI * 2);
+      ctx.stroke();
+
       // 2. Physics & Threat Updates
       state.threats.forEach((threat, idx) => {
         threat.x += threat.vx;
@@ -211,31 +248,46 @@ export default function CyberSamurai() {
           return;
         }
 
-        // Draw threat node
+        // Draw threat node with mechanical elements
         ctx.save();
         ctx.shadowBlur = 15;
         ctx.shadowColor = '#FF4444';
         
-        // Red glowing cyber ring
+        // Red glowing outer ring (Spinning shield segment)
         ctx.strokeStyle = 'rgba(255, 68, 68, 0.85)';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1.5;
+        const spinSpeed = time * 2;
         ctx.beginPath();
-        ctx.arc(threat.x, threat.y, threat.radius, 0, Math.PI * 2);
+        for (let i = 0; i < 4; i++) {
+          const startAngle = spinSpeed + (i * Math.PI) / 2;
+          const endAngle = startAngle + Math.PI / 4;
+          ctx.arc(threat.x, threat.y, threat.radius + 3, startAngle, endAngle);
+        }
         ctx.stroke();
 
-        // Inner core
-        ctx.fillStyle = 'rgba(255, 68, 68, 0.2)';
+        // Pulsing virus core
+        const pulseRadius = threat.radius + Math.sin(time * 6 + threat.id) * 2;
+        ctx.fillStyle = 'rgba(255, 68, 68, 0.25)';
         ctx.beginPath();
-        ctx.arc(threat.x, threat.y, threat.radius - 5, 0, Math.PI * 2);
+        ctx.arc(threat.x, threat.y, pulseRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Crosshairs lines
+        // Mechanical spider-like legs (6 leg lines wriggling)
+        ctx.strokeStyle = 'rgba(255, 68, 68, 0.6)';
+        ctx.lineWidth = 2;
+        for (let a = 0; a < 6; a++) {
+          const legAngle = (a * Math.PI) / 3 + Math.sin(time * 2 + threat.id) * 0.2;
+          ctx.beginPath();
+          ctx.moveTo(threat.x + Math.cos(legAngle) * threat.radius, threat.y + Math.sin(legAngle) * threat.radius);
+          ctx.lineTo(threat.x + Math.cos(legAngle) * (threat.radius + 8), threat.y + Math.sin(legAngle) * (threat.radius + 8));
+          ctx.stroke();
+        }
+
+        // Inner core
+        ctx.fillStyle = '#FF4444';
         ctx.beginPath();
-        ctx.moveTo(threat.x - threat.radius - 4, threat.y);
-        ctx.lineTo(threat.x + threat.radius + 4, threat.y);
-        ctx.moveTo(threat.x, threat.y - threat.radius - 4);
-        ctx.lineTo(threat.x, threat.y + threat.radius + 4);
-        ctx.stroke();
+        ctx.arc(threat.x, threat.y, 6, 0, Math.PI * 2);
+        ctx.fill();
 
         ctx.restore();
 
@@ -243,7 +295,7 @@ export default function CyberSamurai() {
         ctx.fillStyle = 'rgba(255, 68, 68, 0.9)';
         ctx.font = "10px 'JetBrains Mono', monospace";
         ctx.textAlign = 'center';
-        ctx.fillText(threat.name, threat.x, threat.y - threat.radius - 8);
+        ctx.fillText(threat.name, threat.x, threat.y - threat.radius - 12);
       });
 
       // 3. Samurai AI Auto-Targeting
@@ -270,7 +322,7 @@ export default function CyberSamurai() {
 
       // 4. Samurai Physics & Movement
       samurai.trail.push({ x: samurai.x, y: samurai.y });
-      if (samurai.trail.length > 8) samurai.trail.shift();
+      if (samurai.trail.length > 10) samurai.trail.shift();
 
       if (samurai.state === 'idle') {
         // Float ambiently
@@ -294,7 +346,7 @@ export default function CyberSamurai() {
           // Close enough to slash!
           samurai.state = 'slashing';
           samurai.slashAngle = Math.atan2(dy, dx);
-          samurai.slashRadius = 45;
+          samurai.slashRadius = 50;
           samurai.slashTimer = 6;
           state.screenshake = 10;
 
@@ -333,17 +385,29 @@ export default function CyberSamurai() {
       }
 
       // 5. Draw Samurai Character
-      // Draw neon motion trail
-      if (samurai.trail.length > 1) {
-        ctx.beginPath();
-        ctx.moveTo(samurai.trail[0].x, samurai.trail[0].y);
-        for (let i = 1; i < samurai.trail.length; i++) {
-          ctx.lineTo(samurai.trail[i].x, samurai.trail[i].y);
-        }
-        ctx.strokeStyle = 'rgba(0, 255, 65, 0.18)';
-        ctx.lineWidth = 8;
-        ctx.lineCap = 'round';
-        ctx.stroke();
+      // Draw Ghost After-images (motion blur echo) when dashing or returning
+      if (samurai.state === 'dashing' || samurai.state === 'returning') {
+        const ghostIndices = [2, 5, 8];
+        ghostIndices.forEach((offset, idx) => {
+          const ghostPos = samurai.trail[samurai.trail.length - 1 - offset];
+          if (ghostPos) {
+            ctx.save();
+            ctx.globalAlpha = 0.15 - idx * 0.05;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#00FF41';
+            
+            // Draw ghost body silhouette
+            ctx.fillStyle = 'rgba(0, 255, 65, 0.4)';
+            ctx.beginPath();
+            ctx.moveTo(ghostPos.x, ghostPos.y - 4);
+            ctx.lineTo(ghostPos.x + 12, ghostPos.y + 10);
+            ctx.lineTo(ghostPos.x, ghostPos.y + 24);
+            ctx.lineTo(ghostPos.x - 12, ghostPos.y + 10);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+          }
+        });
       }
 
       // Draw Sword Slash Arc
@@ -365,44 +429,106 @@ export default function CyberSamurai() {
         ctx.restore();
       }
 
-      // Draw Samurai Body (Cyber Ninja visual representation)
+      // Draw Samurai Body (Detailed Cyber Ninja vector shape)
       ctx.save();
       ctx.shadowBlur = 15;
       ctx.shadowColor = '#00FF41';
 
-      // Neon glowing visor
-      ctx.fillStyle = '#00FF41';
-      ctx.beginPath();
-      ctx.ellipse(samurai.x, samurai.y - 12, 10, 4, 0, 0, Math.PI * 2);
-      ctx.fill();
+      // 1. Jetpack Thruster Flame (only when moving)
+      const moving = Math.hypot(samurai.tx - samurai.x, samurai.ty - samurai.y) > 5;
+      if (moving) {
+        ctx.save();
+        const flameSize = 10 + Math.random() * 8;
+        const angle = Math.atan2(samurai.ty - samurai.y, samurai.tx - samurai.x);
+        ctx.translate(samurai.x, samurai.y + 12);
+        ctx.rotate(angle + Math.PI); // opposite to movement direction
+        
+        const grad = ctx.createLinearGradient(0, 0, flameSize, 0);
+        grad.addColorStop(0, '#FFFFFF');
+        grad.addColorStop(0.3, '#00FF41');
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        
+        ctx.beginPath();
+        ctx.moveTo(0, -4);
+        ctx.lineTo(flameSize, 0);
+        ctx.lineTo(0, 4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
 
-      // Cyber helmet/head outline
+      // 2. Flowing Cyber Cape (waving back using sine waves)
+      ctx.save();
+      const capeGrad = ctx.createLinearGradient(samurai.x, samurai.y, samurai.x - 20, samurai.y + 30);
+      capeGrad.addColorStop(0, 'rgba(0, 255, 65, 0.65)');
+      capeGrad.addColorStop(1, 'transparent');
+      ctx.fillStyle = capeGrad;
+      ctx.beginPath();
+      ctx.moveTo(samurai.x - 6, samurai.y + 8);
+      ctx.quadraticCurveTo(samurai.x - 16, samurai.y + 18, samurai.x - 24 + Math.sin(time * 4) * 4, samurai.y + 36);
+      ctx.lineTo(samurai.x - 12 + Math.sin(time * 4) * 4, samurai.y + 36);
+      ctx.quadraticCurveTo(samurai.x - 4, samurai.y + 20, samurai.x + 6, samurai.y + 8);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      // 3. Torso armor plate (Vector diamond with detailed border)
+      ctx.fillStyle = 'rgba(10, 30, 10, 0.95)';
       ctx.strokeStyle = 'rgba(0, 255, 65, 0.85)';
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.arc(samurai.x, samurai.y - 12, 8, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Armor plate torso (Vector diamond shape)
-      ctx.fillStyle = 'rgba(10, 30, 10, 0.9)';
-      ctx.beginPath();
       ctx.moveTo(samurai.x, samurai.y - 4);
-      ctx.lineTo(samurai.x + 12, samurai.y + 10);
+      ctx.lineTo(samurai.x + 13, samurai.y + 10);
       ctx.lineTo(samurai.x, samurai.y + 24);
-      ctx.lineTo(samurai.x - 12, samurai.y + 10);
+      ctx.lineTo(samurai.x - 13, samurai.y + 10);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
-      // Neon energy core in chest
+      // Shoulder Pauldrons
+      ctx.fillStyle = 'rgba(0, 255, 65, 0.2)';
+      ctx.beginPath();
+      ctx.arc(samurai.x - 13, samurai.y + 3, 5, 0, Math.PI * 2);
+      ctx.arc(samurai.x + 13, samurai.y + 3, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Pulsing Core in Chest
+      const corePulse = 2.5 + Math.sin(time * 8) * 0.7;
       ctx.fillStyle = '#FFFFFF';
       ctx.beginPath();
-      ctx.arc(samurai.x, samurai.y + 6, 3, 0, Math.PI * 2);
+      ctx.arc(samurai.x, samurai.y + 6, corePulse, 0, Math.PI * 2);
       ctx.fill();
+
+      // 4. Helmet & visor
+      ctx.fillStyle = 'rgba(5, 20, 5, 0.95)';
+      ctx.beginPath();
+      ctx.arc(samurai.x, samurai.y - 12, 9, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Glowing visor layers
+      ctx.fillStyle = '#00FF41';
+      ctx.beginPath();
+      ctx.ellipse(samurai.x, samurai.y - 12, 10, 3, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.ellipse(samurai.x, samurai.y - 12, 6, 1.2, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Cyber Topknot Plume/Crest
+      ctx.strokeStyle = 'rgba(0, 255, 65, 0.85)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(samurai.x, samurai.y - 21);
+      ctx.quadraticCurveTo(samurai.x - 8, samurai.y - 28, samurai.x - 15 + Math.sin(time * 3) * 3, samurai.y - 25);
+      ctx.stroke();
 
       ctx.restore();
 
-      // Draw Katana Sword (in hand when idle/returning)
+      // Draw Katana Sword (when not slashing)
       if (samurai.state !== 'slashing') {
         ctx.save();
         ctx.shadowBlur = 8;
@@ -410,30 +536,28 @@ export default function CyberSamurai() {
         ctx.strokeStyle = 'rgba(0, 255, 65, 0.85)';
         ctx.lineWidth = 1.8;
         ctx.beginPath();
-        // Hand position relative
         const hx = samurai.x - 8;
         const hy = samurai.y + 10;
         ctx.moveTo(hx, hy);
-        // Angled blade
         ctx.lineTo(hx - 12, hy - 24);
         ctx.stroke();
         ctx.restore();
       }
 
-      // 6. Binary Particles Update & Draw
+      // 6. Binary & Glitch Particles Update & Draw
       state.particles.forEach((p, idx) => {
         p.x += p.vx;
         p.y += p.vy;
-        p.alpha -= 0.02;
+        p.alpha -= 0.025;
 
         if (p.alpha <= 0) {
           state.particles.splice(idx, 1);
           return;
         }
 
-        ctx.fillStyle = `rgba(255, 68, 68, ${p.alpha})`;
+        ctx.fillStyle = `${p.color}${p.alpha})`;
         ctx.font = `${p.size}px 'JetBrains Mono', monospace`;
-        ctx.fillText(p.char, p.x, p.y);
+        ctx.fillText(p.text, p.x, p.y);
       });
 
       ctx.restore();
@@ -562,26 +686,15 @@ export default function CyberSamurai() {
           </div>
         </div>
 
-        {/* Console & Canvas Grid Layout */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: 'var(--space-l)',
-            alignItems: 'stretch',
-          }}
-        >
+        {/* Console & Canvas Grid Layout: Optimized to not stack on desktop/tablets */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
           {/* Left Panel: HTML5 Canvas Screen */}
           <div
-            className="glass-card"
+            className="md:col-span-7 xl:col-span-8 glass-card flex flex-col relative overflow-hidden"
             style={{
-              position: 'relative',
-              overflow: 'hidden',
               background: '#0A0E0A',
               border: '1px solid var(--color-border)',
               borderRadius: 'var(--radius-lg)',
-              display: 'flex',
-              flexDirection: 'column',
             }}
           >
             {/* Screen Header */}
@@ -621,7 +734,7 @@ export default function CyberSamurai() {
               style={{
                 display: 'block',
                 width: '100%',
-                height: '350px',
+                height: '460px', // Increased canvas height
                 cursor: autoMode ? 'default' : 'crosshair',
                 background: '#0A0E0A',
               }}
@@ -651,13 +764,10 @@ export default function CyberSamurai() {
 
           {/* Right Panel: Cyber logs Console */}
           <div
-            className="glass-card"
+            className="md:col-span-5 xl:col-span-4 glass-card flex flex-col"
             style={{
               padding: 'var(--space-l)',
               fontFamily: 'var(--font-mono)',
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: '350px',
               border: '1px solid var(--color-border)',
               background: 'rgba(10, 14, 10, 0.9)',
             }}
