@@ -70,4 +70,18 @@ export const projects: Project[] = [
     featured: true,
     year: 2026,
   },
+  {
+    slug: 'verda-farming',
+    title: 'Verda Farming App',
+    description:
+      'A collaborative cross-platform farming marketplace and utility application built with Flutter and Firebase.',
+    longDescription:
+      'Collaborated on designing and developing a cross-platform farming and agriculture marketplace application utilizing Flutter and Dart. Integrated Firebase Data Connect for backend data management, secure user authentication, and real-time marketplace product updates. Built responsive front-end views for mobile and desktop deployments.',
+    tags: ['development'],
+    techStack: ['Flutter', 'Dart', 'Firebase', 'Data Connect', 'TypeScript', 'CMake'],
+    githubUrl: 'https://github.com/zkestroyer/farming',
+    imageUrl: '/assets/images/verda-farming.png',
+    featured: true,
+    year: 2026,
+  },
 ];
