@@ -232,6 +232,39 @@ export const skills: Skill[] = [
       'Auditing injections and securing database query formats',
     ],
   },
+  {
+    name: 'Dart',
+    category: 'languages',
+    status: 'Advanced',
+    command: 'dart run bin/main.dart',
+    details: [
+      'Object-oriented language optimized for client development and reactive UI design',
+      'Asynchronous event loop programming (Futures and Streams)',
+      'Integrating database engines (SQLite) and cloud services (Firebase Data Connect)',
+    ],
+  },
+  {
+    name: 'Liquid',
+    category: 'languages',
+    status: 'Advanced',
+    command: 'shopify theme dev --store perma-jewelry',
+    details: [
+      'Developing dynamic Shopify sections, blocks, and snippet components',
+      'Managing e-commerce data rendering (collections, products, carts) securely',
+      'Extending pre-built storefront themes with modular styling and interactive scripts',
+    ],
+  },
+  {
+    name: 'Swift',
+    category: 'languages',
+    status: 'Intermediate',
+    command: 'swiftc -o main main.swift',
+    details: [
+      'Native iOS application development with strong type safety',
+      'Writing bridge files and native integrations for cross-platform frameworks',
+      'Leveraging native iOS system APIs and hardware interactions',
+    ],
+  },
 
   // ─── Development ──────────────────────────────────
   {
