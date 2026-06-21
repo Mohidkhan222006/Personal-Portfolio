@@ -7,9 +7,8 @@ import Typewriter from '@/components/ui/typewriter/Typewriter';
 const MatrixRain = dynamic(() => import('@/components/ui/matrix-rain/MatrixRain'), { ssr: false });
 
 const ROLES = [
-  'Front-end AI Engineer',
+  'Full-stack Engineer',
   'Penetration Tester',
-  'Full Stack Developer',
   'Ethical Hacker',
   'Security Researcher',
 ];
@@ -122,8 +121,8 @@ export default function HeroSection() {
             lineHeight: 1.7,
           }}
         >
-          CS student at NEDUET &amp; Front-end AI Engineer. I break systems to understand how they work, then build
-          robust, secure software. Specializing in AI integration, frontend development, and penetration testing.
+          CS student at NEDUET &amp; Full-stack Engineer. I break systems to understand how they work, then build
+          robust, secure software. Specializing in AI integration, full-stack development, and penetration testing.
         </p>
 
         {/* CTA buttons */}

@@ -75,15 +75,15 @@ export default function AboutSection() {
                 marginBottom: 'var(--space-xl)',
               }}
             >
-              On the development side, I work as a Front-end AI Engineer, designing streaming interfaces
-              and AI-driven features with Next.js, TypeScript, and Python. My goal is to build secure, robust software
-              at the intersection of AI integration and defensive engineering.
+              On the development side, I work as a Full-stack Engineer, designing streaming interfaces,
+              SaaS platforms, and AI-driven features with Next.js, TypeScript, Python, and PostgreSQL. My goal is to build secure,
+              robust software at the intersection of AI integration and defensive engineering.
             </p>
 
             {/* Tags */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {[
-                'Front-end AI Engineer',
+                'Full-stack Engineer',
                 'AI Engineering',
                 'Penetration Testing',
                 'CTF Player',

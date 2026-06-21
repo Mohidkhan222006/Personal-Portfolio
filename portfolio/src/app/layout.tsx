@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Mohid Ahmer Khan | Front-end AI Engineer & Security Researcher",
+  title: "Mohid Ahmer Khan | Full-stack Engineer & Security Researcher",
   description:
-    "Portfolio of Mohid Ahmer Khan — CS student at NEDUET, Front-end AI Engineer, and Penetration Tester from Karachi, Pakistan. Specializing in AI integration, secure software development, and ethical hacking.",
+    "Portfolio of Mohid Ahmer Khan — CS student at NEDUET, Full-stack Engineer, and Penetration Tester from Karachi, Pakistan. Specializing in AI integration, secure software development, and ethical hacking.",
   keywords: [
     "Mohid Ahmer Khan",
     "Mohid Khan",
     "NEDUET",
-    "Front-end AI Engineer",
+    "Full-stack Engineer",
     "AI Engineering",
     "Penetration Tester",
     "Ethical Hacker",
@@ -29,16 +29,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Mohid Ahmer Khan | Front-end AI Engineer & Security Researcher",
+    title: "Mohid Ahmer Khan | Full-stack Engineer & Security Researcher",
     description:
-      "Portfolio of Mohid Ahmer Khan — CS student at NEDUET, Front-end AI Engineer, and Penetration Tester from Karachi, Pakistan.",
+      "Portfolio of Mohid Ahmer Khan — CS student at NEDUET, Full-stack Engineer, and Penetration Tester from Karachi, Pakistan.",
     siteName: "Mohid Ahmer Khan — Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohid Ahmer Khan | Front-end AI Engineer & Security Researcher",
+    title: "Mohid Ahmer Khan | Full-stack Engineer & Security Researcher",
     description:
-      "Portfolio of Mohid Ahmer Khan — CS student at NEDUET, Front-end AI Engineer, and Penetration Tester.",
+      "Portfolio of Mohid Ahmer Khan — CS student at NEDUET, Full-stack Engineer, and Penetration Tester.",
   },
   robots: {
     index: true,
