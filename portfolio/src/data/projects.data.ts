@@ -111,5 +111,20 @@ export const projects: Project[] = [
     featured: true,
     year: 2026,
   },
+  {
+    slug: 'multi-tenant-saas',
+    title: 'Multi-Tenant SaaS Platform',
+    description:
+      'A multi-tenant SaaS project management platform with Stripe subscription billing, role-based access control, and Postgres row-level security.',
+    longDescription:
+      'Designed and built a production-grade multi-tenant SaaS project management platform. Implemented a shared-database, shared-schema architecture using PostgreSQL Row-Level Security (RLS) to enforce tenant isolation at the database layer. Integrated Stripe Subscriptions with webhooks and customer billing portals, and role-based access control (Owner, Admin, Member, Viewer roles) utilizing NextAuth and secure email invitations.',
+    tags: ['development', 'security'],
+    techStack: ['Next.js 14', 'TypeScript', 'PostgreSQL', 'Prisma', 'Stripe', 'Row-Level Security (RLS)', 'Tailwind CSS'],
+    githubUrl: 'https://github.com/Mohidkhan222006/Multi-tenant-SaaS',
+    imageUrl: '/assets/images/saas-platform.png',
+    featured: true,
+    year: 2026,
+  },
 ];
+
 
